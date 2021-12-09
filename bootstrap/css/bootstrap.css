@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-/*
- * Bootstrap v4.0.0 (https://getbootstrap.com)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-=======
 @charset "UTF-8";
 /*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
->>>>>>> 82b9e471350df270fc3355f05f097718f333fd15
  */
 :root {
   --bs-blue: #0d6efd;
