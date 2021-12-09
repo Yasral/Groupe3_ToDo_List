@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Todo List Web App</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+
+<body>
+    <!-- Modals  -->
+
+    <!-- details Button trigger modal -->
+    <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showDetailsModal">
+        Details
+    </button>
+
+    <!--  Task details Modal -->
+    <div class="modal fade" id="showDetailsModal" tabindex="-1" role="dialog" aria-labelledby="showDetailsModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="details_modal_title">Tache 1 <button class="btn btn-sm ps-4 btn-primary py-0 fs-x-small">En cours</button></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <h6>Description</h6>
+                    <p >Lorem ipsum dolor  deleniti, veritatis illum, atque distinctio voluptatibus facere at a dolorum obcaecati doloremque quidem rem sint quisquam, et sequi consequatur minus voluptatem aut?</p>
+                    <h6 class="d-inline-block">Status : </h6>
+                    <p class="d-inline">Eleve</p>
+                    <br>
+                    <h6 class="d-inline-block">Date limite : </h6>
+                    <p class="d-inline">12/12/2021</p>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Ajouter</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- End Task Details Modal -->
+
+    <!-- details Button trigger modal -->
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addTaskModal">
+        Ajout de tache
+    </button>
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title">Ajouter Tache</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="task_title">Titre</label>
+                            <input type="text" class="form-control" id="task_title"
+                                placeholder="fonctionalite d'ajout de tache">
+                        </div>
+                        <div class="form-group">
+                            <label for="task_deadline">Date limite</label>
+                            <input type="datetime-local" class="form-control" id="task_deadline">
+                        </div>
+                        <div class="form-group">
+                            <label for="task_description">Description</label>
+                            <textarea class="form-control" id="task_description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="low_priority">Priorite</label>
+                            <div>
+                                <div class="form-check  form-check-inline">
+                                    <input class="form-check-input" type="radio" name="task_priority" id="low_priority"
+                                        value="option1">
+                                    <label class="form-check-label" for="low_priority">faible</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="task_priority"
+                                        id="average-priority" value="option2">
+                                    <label class="form-check-label" for="average-priority">Moyen</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="task_priority" id="high-priority"
+                                        value="option2">
+                                    <label class="form-check-label" for="high-priority">Elevee</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Add Task Modal -->
+
+    <!-- End Modals -->
+    <!-- JS Dependancy: Popper and Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
