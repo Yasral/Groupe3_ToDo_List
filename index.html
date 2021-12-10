@@ -16,16 +16,157 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
         integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
         crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css	">
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 
 <body>
+    <div class="container">
+        <div class=" p-2 d-flex justify-content-end my-5 align-items-center">
+            <!-- <div class="input-group ">
+                 <div class="form-outline">
+                    <input type="search" id="form1" class="form-control" placeholder="Rechercher tache"/>
+                </div> 
+                <a href="#" class="bg-danger">
+                    <i class="fa fa-search"></i>
+                </a>
+            </div> -->
+            <!-- details Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showDetailsModal">
+                Details
+            </button>
+            <!-- details Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-danger ml-4" data-toggle="modal" data-target="#addTaskModal">
+                <i class="fa fa-plus"></i> <span>Ajout de tache</span>
+            </button>
+        </div>
+        <div class="row d-grid  row-cols-1  sp-grid-gap">
+            <div class="card px-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-danger"><i class="fa fa-star"></i> Faible
+                        </button>
+                    </div>
+                    <button class="btn btn-small btn-primary fs-x-small py-0"> En cours</button>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">Special title treatment</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
+                            pariatur
+                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
+                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
+                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
+                </div>
+                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
+                    <strong class="fs-x-small"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
+                        15:00</strong>
+
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-success">
+                            <i class="fa fa-check"></i>
+                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                            </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card px-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-danger"><i class="fa fa-star"></i> Faible
+                        </button>
+                    </div>
+                    <button class="btn btn-small btn-primary fs-x-small py-0"> En cours</button>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">Special title treatment</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
+                            pariatur
+                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
+                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
+                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
+                </div>
+                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
+                    <strong class="fs-x-small"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
+                        15:00</strong>
+
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-success">
+                            <i class="fa fa-check"></i>
+                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                            </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card px-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-danger"><i class="fa fa-star"></i> Faible
+                        </button>
+                    </div>
+                    <button class="btn btn-small btn-primary fs-x-small py-0"> En cours</button>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">Special title treatment</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
+                            pariatur
+                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
+                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
+                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
+                </div>
+                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
+                    <strong class="fs-x-small"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
+                        15:00</strong>
+
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-success">
+                            <i class="fa fa-check"></i>
+                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                            </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card px-0">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-danger"><i class="fa fa-star"></i> Faible
+                        </button>
+                    </div>
+                    <button class="btn btn-small btn-primary fs-x-small py-0"> En cours</button>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">Special title treatment</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
+                            pariatur
+                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
+                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
+                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
+                </div>
+                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
+                    <strong class="fs-x-small"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
+                        15:00</strong>
+
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-success">
+                            <i class="fa fa-check"></i>
+                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                            </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- Modals  -->
 
-    <!-- details Button trigger modal -->
-    <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showDetailsModal">
-        Details
-    </button>
 
     <!--  Task details Modal -->
     <div class="modal fade" id="showDetailsModal" tabindex="-1" role="dialog" aria-labelledby="showDetailsModalTitle"
@@ -53,11 +194,6 @@
         </div>
     </div>
     <!-- End Task Details Modal -->
-
-    <!-- details Button trigger modal -->
-    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addTaskModal">
-        Ajout de tache
-    </button>
     <!-- Add Task Modal -->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalTitle"
         aria-hidden="true">

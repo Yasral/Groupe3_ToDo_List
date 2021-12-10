@@ -1,3 +1,27 @@
-.fs-x-small{
-   font-style: x-small;
+.fs-small {
+   font-size: small;
+}
+
+.fs-x-small {
+   font-size: x-small;
+}
+
+.sp-text-red {
+   color: #ce0033;
+}
+
+.sp-background-red {
+   background-color: #ce0033;
+}
+
+.sp-flex-nowrap {
+   flex-wrap: nowrap;
+}
+
+.sp-grid-gap{
+   grid-gap: 20px;
+   grid-row-gap: 50px;
+}
+.card-body{
+   cursor: pointer;
 }
