@@ -25,3 +25,9 @@
 .card-body{
    cursor: pointer;
 }
+#error{
+   display: block;
+   text-align: center;
+   font-size: small;
+   color: #ce0033;
+}

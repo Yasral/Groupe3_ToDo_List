@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
     <!-- JS Dependancy: Popper and Jquery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script> -->
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -64,10 +68,11 @@
                         15:00</strong>
 
                     <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-success">
+                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task">
                             <i class="fa fa-check"></i>
-                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
-                            </button>
+                        </a>
+                        <a class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -94,10 +99,11 @@
                         15:00</strong>
 
                     <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-success">
+                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task">
                             <i class="fa fa-check"></i>
-                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
-                            </button>
+                        </a>
+                        <a class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -124,10 +130,11 @@
                         15:00</strong>
 
                     <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-success">
+                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task">
                             <i class="fa fa-check"></i>
-                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
-                            </button>
+                        </a>
+                        <a class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -154,10 +161,11 @@
                         15:00</strong>
 
                     <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-success">
+                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task">
                             <i class="fa fa-check"></i>
-                            <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
-                            </button>
+                        </a>
+                        <a class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -201,13 +209,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_title">Ajouter Tache</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" id="close_add_task_modal" data-dismiss="modal"
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form class="form-modal">
                         <div class="form-group">
+                            <div class="form-group">
+                                <p class="d-none" id="error">Verifier que les valeurs saisies sont correctes</p>
+                            </div>
                             <label for="task_title">Titre</label>
                             <input type="text" class="form-control" id="task_title"
                                 placeholder="fonctionalite d'ajout de tache" />
@@ -224,18 +236,18 @@
                             <label for="low_priority">Priorite</label>
                             <div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="task_priority" id="low_priority"
-                                        value="option1" />
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="low_priority" value="faible" checked />
                                     <label class="form-check-label" for="low_priority">faible</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="task_priority"
-                                        id="average-priority" value="option2" />
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="average-priority" value="moyen" />
                                     <label class="form-check-label" for="average-priority">Moyen</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="task_priority" id="high-priority"
-                                        value="option2" />
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="high-priority" value="elevee" />
                                     <label class="form-check-label" for="high-priority">Elevee</label>
                                 </div>
                             </div>
@@ -243,8 +255,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Ajouter</button>
+                    <!-- <button type="button" class="btn btn-secondary fs-small" data-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-danger fs-small" id="btn_add">Valider</button>
                 </div>
             </div>
         </div>
@@ -252,6 +264,10 @@
     <!-- End Add Task Modal -->
 
     <!-- End Modals -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
