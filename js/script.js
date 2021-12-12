@@ -33,11 +33,11 @@ window.onload = (e) => {
 
       let htmlPriorityElement = document.createElement("button");
       htmlPriorityElement.setAttribute("id", "priority");
-      htmlPriorityElement.setAttribute("class", "border-0 btn-transition btn btn-outline-danger");
+      htmlPriorityElement.setAttribute("class", "border-0 btn-transition btn btn-outline-secondary");
       const starNumber = { faible: 1, moyen: 2, elevee: 3 }
       for (let index = 1; index <= starNumber[task.priorite]; index++) {
          //✅
-         htmlPriorityElement.appendChild(htmlStarElement)
+         htmlPriorityElement.innerHTML += htmlStarElement.outerHTML
       }
       htmlPriorityElement.innerHTML += task.priorite;//✅
 
