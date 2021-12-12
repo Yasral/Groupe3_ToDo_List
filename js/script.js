@@ -38,18 +38,32 @@ window.onload = (e) => {
       HandlingInputs(e)
    })
 
-   let finishTaskButtons = document.querySelectorAll('#remove_task')
-   finishTaskButtons = Array.from(finishTaskButtons)
    let taskCards = document.querySelectorAll('.card')
-
+   /********************************/
+   /*Mark  Task As finished */
+   /********************************/
+   let finishTaskButtons = document.querySelectorAll('#finish_task')
    finishTaskButtons.forEach((event, i) => {
       event.addEventListener('click', function () {
-         removeTask(finishTaskButtons, event, i);
+         const currentCard = taskCards[i];
+         let STATE = currentCard.querySelector('#state');
+         STATE.textContent = STATE.textContent === "Terminé" ? "En cours" : "Terminé"
+         STATE.classList.toggle("btn-primary")
+         STATE.classList.toggle("btn-secondary")
       })
    })
+
    /********************************/
    /*Removing Task And Task Card */
    /********************************/
+   let removeTaskButtons = document.querySelectorAll('#remove_task')
+   removeTaskButtons = Array.from(removeTaskButtons)
+
+   removeTaskButtons.forEach((event, i) => {
+      event.addEventListener('click', function () {
+         removeTask(removeTaskButtons, event, i);
+      })
+   })
    function removeTask(collection, elt, index) {
       collection.splice(index, 1);
       elt.parentElement.parentElement.parentElement.remove();
@@ -59,7 +73,7 @@ window.onload = (e) => {
    /*Show  Task details And Task Card */
    /********************************/
    let showDetailsTextTrigger = document.querySelectorAll('.card-body')
-
+   
    showDetailsTextTrigger.forEach((event, i) => {
       event.addEventListener('click', function () {
          handlingDetailsModalContentTask(i)
@@ -67,16 +81,15 @@ window.onload = (e) => {
       })
    })
    function handlingDetailsModalContentTask(index) {
-      const currentCard = document.querySelectorAll('.card')[index];
+      const currentCard = taskCards[index];
       let taskTitle = currentCard.querySelector('#priority')
       document.querySelector('#details_task_title').innerHTML = taskTitle.textContent
       let taskDescrption = currentCard.querySelector('#description')
       document.querySelector('#details_task_description').innerHTML = taskDescrption.textContent
-      let taskState = currentCard.querySelector('#state')
+      let taskState = currentCard.querySelector('#state');
       document.querySelector('#details_task_state').innerHTML = taskState.textContent
       let taskDeadline = currentCard.querySelector('#deadline')
       document.querySelector('#details_task_deadline').innerHTML = taskDeadline.textContent
    }
-
-
+   
 }
