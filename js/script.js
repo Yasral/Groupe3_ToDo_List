@@ -228,10 +228,20 @@ window.onload = (e) => {
    /********************************/
    /*Edit  Task details And Task Card */
    /********************************/
+   document.querySelector('#add_modal_button').addEventListener('click', function() {
+      formModal.reset()
+      document.querySelector('h5#modal_title').innerHTML="Ajouter tâche";
+      document.querySelector('#add_modal_trigger').click();
+   })
+
+   /********************************/
+   /*Edit  Task details And Task Card */
+   /********************************/
    let editTaskButtons = document.querySelectorAll('#edit_task')
    editTaskButtons.forEach((event, i) => {
       event.addEventListener('click', function () {
          editTaskDetails(i)
+         document.querySelector('h5#modal_title').innerHTML="Modifier tâche"
          document.querySelector('#add_modal_trigger').click()
       })
    })
@@ -254,9 +264,8 @@ window.onload = (e) => {
       taskDeadlineInput.value =
          date.getUTCFullYear() + "-" + date.getUTCDate() + "-" + date.getUTCMonth()
          + "T"
-         + date.getUTCHours() + ":" + date.getUTCMinutes();
-
-
+         + date.toLocaleTimeString();
+      console.log(taskDeadlineInput.value);
       taskPriorityInput = document.querySelector('[name="task_priority"]:checked')
       document.querySelector(`input[name="task_priority"][value="${taskPriorityInput.value}"]`).checked = true
    }

@@ -44,7 +44,10 @@
                 Details
             </button>
             <!-- details Button trigger modal -->
-            <button  type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_trigger" data-toggle="modal" data-target="#addTaskModal">
+            <button  type="button" class="btn btn-sm btn-danger ml-4 d-none" id="add_modal_trigger" data-toggle="modal" data-target="#addTaskModal">
+                <i class="fa fa-plus"></i> <span>Ajout de tache</span>
+            </button>
+            <button  type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_button">
                 <i class="fa fa-plus"></i> <span>Ajout de tache</span>
             </button>
         </div>
@@ -247,7 +250,7 @@
                         <div class="form-group">
                             <label for="task_deadline">Date limite</label>
                             <input type="datetime-local" class="form-control" id="task_deadline" value="2021-01-12T19:30"/>
-                        </div>
+                        </div>add
                         <div class="form-group">
                             <label for="task_description">Description</label>
                             <textarea class="form-control" id="task_description" rows="3"></textarea>
