@@ -44,22 +44,21 @@
                 Details
             </button>
             <!-- details Button trigger modal -->
-            <button type="button" class="btn btn-sm btn-danger ml-4" data-toggle="modal" data-target="#addTaskModal">
+            <button  type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_trigger" data-toggle="modal" data-target="#addTaskModal">
                 <i class="fa fa-plus"></i> <span>Ajout de tache</span>
             </button>
         </div>
-        <div class="row d-grid  row-cols-1  sp-grid-gap">
+        <div class="row d-grid  row-cols-1  sp-grid-gap" id="task_container">
             <div class="card px-0" data-id="" id="card-0" >
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="d-inline">
                         <button class="border-0 btn-transition btn btn-outline-danger" id="priority"><i class="fa fa-star"></i> Faible
                         </button>
                     </div>
-                    <button class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                    </button>
+                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-title" id="title">Special title treatment</h5>
+                    <h6 class="card-title" id="title">Special title treatment</h6>
                         <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
                             pariatur
                             eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
@@ -67,8 +66,7 @@
                         <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
                 </div>
                 <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
-                        15:00</strong>
+                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
 
                     <div class="d-inline">
                         <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
@@ -92,8 +90,7 @@
                         <button class="border-0 btn-transition btn btn-outline-danger" id="priority"><i class="fa fa-star"></i> Faible
                         </button>
                     </div>
-                    <button class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                    </button>
+                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
                 </div>
                 <div class="card-body">
                     <h6 class="card-title" id="title">Special title treatment</h5>
@@ -104,8 +101,7 @@
                         <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
                 </div>
                 <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
-                        15:00</strong>
+                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
 
                     <div class="d-inline">
                         <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
@@ -129,8 +125,7 @@
                         <button class="border-0 btn-transition btn btn-outline-danger" id="priority"><i class="fa fa-star"></i> Faible
                         </button>
                     </div>
-                    <button class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                    </button>
+                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
                 </div>
                 <div class="card-body">
                     <h6 class="card-title" id="title">Special title treatment</h5>
@@ -141,8 +136,7 @@
                         <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
                 </div>
                 <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
-                        15:00</strong>
+                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
 
                     <div class="d-inline">
                         <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
@@ -166,8 +160,7 @@
                         <button class="border-0 btn-transition btn btn-outline-danger" id="priority"><i class="fa fa-star"></i> Faible
                         </button>
                     </div>
-                    <button class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                    </button>
+                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
                 </div>
                 <div class="card-body">
                     <h6 class="card-title" id="title">Special title treatment</h5>
@@ -178,8 +171,7 @@
                         <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
                 </div>
                 <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> Date Limite: 01/01/2022 à
-                        15:00</strong>
+                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
 
                     <div class="d-inline">
                         <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
@@ -254,7 +246,7 @@
                         </div>
                         <div class="form-group">
                             <label for="task_deadline">Date limite</label>
-                            <input type="datetime-local" class="form-control" id="task_deadline" />
+                            <input type="datetime-local" class="form-control" id="task_deadline" value="2021-01-12T19:30"/>
                         </div>
                         <div class="form-group">
                             <label for="task_description">Description</label>
@@ -295,7 +287,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="js/script.js"></script>
+    <script type="module" src="./js/script.js"></script>
 </body>
 
 </html>
