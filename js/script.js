@@ -1,13 +1,120 @@
+// import { initializeApp } from "./firebase/app";
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+
+
+import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, getDocs, doc, query, where, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 window.onload = (e) => {
+
+
+   // const firebaseConfig = {
+
+   //    apiKey: "AIzaSyCPmKwQqsltQlZ22Ok03_Swt6nKEAyuuoU",
+   //    authDomain: "storekeeper-85c99.firebaseapp.com",
+   //    projectId: "storekeeper-85c99",
+   //    storageBucket: "storekeeper-85c99.appspot.com",
+   //    messagingSenderId: "195903507633",
+   //    appId: "1:195903507633:web:83961fe8ac827f6e44e690",
+   //    // measurementId: "${config.measurementId}"
+   // };
+   const firebaseConfig = {
+      apiKey: "AIzaSyCRMEWy6cu1ez4Sv9Ja0eKHhxzJui6AUYQ",
+      authDomain: "todoappsimplonbrief.firebaseapp.com",
+      projectId: "todoappsimplonbrief",
+      storageBucket: "todoappsimplonbrief.appspot.com",
+      messagingSenderId: "118571443893",
+      appId: "1:118571443893:web:b900e54c6d83b4947900fc",
+      measurementId: "${config.measurementId}"
+   };
+
+   // Initialize Firebase
+   const app = initializeApp(firebaseConfig);
+   const db = getFirestore(app);
+
+   // Get a list of tasks from the database
+   const getTasksList = async (db) => {
+      // const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
+      // get all occurence/items in the tasks table
+      const tasksCollection = collection(db, 'tasks');
+      const taskSnapshot = await getDocs(tasksCollection);
+      let taskList = taskSnapshot.docs.map(doc => doc.data());
+      return taskList
+
+   }
+   getTasksList(db).then(data => {
+      displayAllElements(data);
+      let taskCards = document.querySelectorAll('.card')
+
+      /********************************/
+      /*Mark  Task As finished */
+      /********************************/
+      let finishTaskButtons = document.querySelectorAll('.finish_task')
+      console.log(finishTaskButtons);
+      finishTaskButtons.forEach((element, i) => {
+         element.addEventListener('click', function (e) {
+            const currentCard = taskCards[i];
+            let stateElement = currentCard.querySelector('.state');
+            stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
+            stateElement.classList.toggle("btn-primary")
+            stateElement.classList.toggle("btn-secondary")
+         })
+      });
+
+
+      /********************************/
+      /*Removing Task And Task Card */
+      /********************************/
+      let removeTaskButtons = document.querySelectorAll('.remove_task')
+      console.log(removeTaskButtons);
+
+      removeTaskButtons.forEach((element, i) => {
+         element.addEventListener('click', function () {
+            removeTask(removeTaskButtons, element, i);
+         })
+      })
+      function removeTask(collection, elt, index) {
+         collection.splice(index, 1);
+         elt.parentElement.parentElement.parentElement.remove();
+
+      }
+
+   });
+
+
+
+   /********************************/
+   /*Insert a task in databases */
+   /********************************/
+   async function InsertInDatabase(newTask) {
+      const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
+   }
+
+
+   // ===================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    /********************************/
    /*Create Card Element */
    /********************************/
-
-   const tasksCollection = [];
+   // const tasksCollection = getTasksList(db);
    const task1 = {
       titre: "Titre 1",
       description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, corrupti.",
-      priorite: "faible",
+      priorite: "moyen",
       dateLimite: "Sun, 12 Dec 2021 09:20:57 GMT",
       etat: "En cours"
    };
@@ -18,22 +125,21 @@ window.onload = (e) => {
       dateLimite: "Sun, 14 Dec 2021 09:20:57 GMT",
       etat: "En cours"
    };
-   tasksCollection.push(task1)
-   tasksCollection.push(task2)
+
 
    function createCardElement(task) {
 
       const htmlStateElement = document.createElement("span");
       htmlStateElement.innerText = task.etat;//✅
-      htmlStateElement.setAttribute("id", "state");
-      htmlStateElement.setAttribute("class", "btn btn-small btn-primary fs-x-small py-0");
+      // htmlStateElement.setAttribute("id", "");
+      htmlStateElement.setAttribute("class", "btn btn-small btn-primary fs-x-small py-0 state");
       // ⭐⭐
       let htmlStarElement = document.createElement("i");
       htmlStarElement.setAttribute("class", "fa fa-star");
 
       let htmlPriorityElement = document.createElement("button");
-      htmlPriorityElement.setAttribute("id", "priority");
-      htmlPriorityElement.setAttribute("class", "border-0 btn-transition btn btn-outline-secondary");
+      // htmlPriorityElement.setAttribute("id", "");
+      htmlPriorityElement.setAttribute("class", "border-0 btn-transition btn btn-outline-secondary priority");
       const starNumber = { faible: 1, moyen: 2, elevee: 3 }
       for (let index = 1; index <= starNumber[task.priorite]; index++) {
          //✅
@@ -52,43 +158,42 @@ window.onload = (e) => {
 
 
       let textDescriptionElement = document.createElement('p')
-      textDescriptionElement.setAttribute('class', "card-text")
-      textDescriptionElement.setAttribute('id', "description")
+      textDescriptionElement.setAttribute('class', "card-text font-weight-normal description")
+      // textDescriptionElement.setAttribute('id', "description")
       textDescriptionElement.innerText = task.description;//✅
 
       let cardTitleElement = document.createElement('h6')
-      cardTitleElement.setAttribute('class', "card-title")
-      cardTitleElement.setAttribute('id', "title")
+      cardTitleElement.setAttribute('class', "card-title title")
+      // cardTitleElement.setAttribute('id', "title")
       cardTitleElement.innerHTML = task.titre;//✅
 
       const cardBodyElement = document.createElement('h6')
-      cardBodyElement.setAttribute('class', "card-body")
-      cardBodyElement.setAttribute('id', "title")
+      cardBodyElement.setAttribute('class', "card-body title")
+      // cardBodyElement.setAttribute('id', "title")
       cardBodyElement.appendChild(cardTitleElement)
       cardBodyElement.appendChild(textDescriptionElement)
 
       let trashElement = document.createElement("i");
       trashElement.setAttribute("class", "fa fa-trash");
       let parentTrashElement = document.createElement("a");
-      parentTrashElement.setAttribute("id", "remove_task");
-      parentTrashElement.setAttribute("id", "remove_task");
-      parentTrashElement.setAttribute("class", "border-0 btn-transition btn btn-outline-danger");
+      // parentTrashElement.setAttribute("id", "");
+      parentTrashElement.setAttribute("class", "border-0 btn-transition btn btn-outline-danger remove_task");
       parentTrashElement.setAttribute("title", "supprimer tache");
       parentTrashElement.appendChild(trashElement)
 
       let finishElement = document.createElement("i");
       finishElement.setAttribute("class", "fa fa-check");
       let parentFinishElement = document.createElement("a");
-      parentFinishElement.setAttribute("id", "finish_task");
-      parentFinishElement.setAttribute("class", "border-0 btn-transition btn btn-outline-success");
+      // parentFinishElement.setAttribute("id", "");
+      parentFinishElement.setAttribute("class", "border-0 btn-transition btn btn-outline-success finish_task");
       parentFinishElement.setAttribute("title", "marquer comme terminée la tâche");
       parentFinishElement.appendChild(finishElement)
 
       let editElement = document.createElement("i");
       editElement.setAttribute("class", "fa fa-edit");
       let parentEditElement = document.createElement("a");
-      parentEditElement.setAttribute("id", "edit_task");
-      parentEditElement.setAttribute("class", "border-0 btn-transition btn btn-outline-warning");
+      // parentEditElement.setAttribute("id", "");
+      parentEditElement.setAttribute("class", "border-0 btn-transition btn btn-outline-warning edit_task");
       parentEditElement.setAttribute("title", "modifier tache");
       parentEditElement.appendChild(editElement)
 
@@ -101,8 +206,8 @@ window.onload = (e) => {
 
       const deadLineElement = document.createElement("strong")
       deadLineElement.innerHTML = '<i class="fas fa-calendar-day"></i> <b>Date Limite:</b>';
-      deadLineElement.setAttribute("id", "deadline");
-      deadLineElement.setAttribute("class", "fs-x-small");
+      // deadLineElement.setAttribute("id", "");
+      deadLineElement.setAttribute("class", "fs-x-small deadline");
       deadLineElement.innerHTML = task.dateLimite;//✅
 
       const cardFooterElement = document.createElement("div");
@@ -121,15 +226,14 @@ window.onload = (e) => {
 
    }
    /********************************/
-   /*Display all CArds */
+   /*Display all Cards */
    /********************************/
    function displayAllElements(tasks) {
+      let task_container = document.getElementById("task_container")
       tasks.forEach(task => {
          task_container.appendChild(createCardElement(task));
       })
    }
-   displayAllElements(tasksCollection)
-
    /********************************/
    /* */
    /********************************/
@@ -146,7 +250,7 @@ window.onload = (e) => {
    /*Handling inputs */
    /********************************/
 
-   function HandlingInputs(e) {
+   function handlingInputs(e, task) {
       if (taskTitleInput.value == "" || taskDescrptionInput.value == "" || taskDeadlineInput.value == "") {
          taskTitleInput.style.borderColor = taskTitleInput.value != "" ? "initial" : "red";
          taskDescrptionInput.style.borderColor = taskDescrptionInput.value != "" ? "initial" : "red";
@@ -167,40 +271,12 @@ window.onload = (e) => {
    }
 
    addButton.addEventListener("click", function (e) {
-      HandlingInputs(e)
+      const newTask = {}
+      handlingInputs(e, newTask)
    })
 
    let taskCards = document.querySelectorAll('.card')
-   /********************************/
-   /*Mark  Task As finished */
-   /********************************/
-   let finishTaskButtons = document.querySelectorAll('#finish_task')
-   finishTaskButtons.forEach((event, i) => {
-      event.addEventListener('click', function () {
-         const currentCard = taskCards[i];
-         let STATE = currentCard.querySelector('#state');
-         STATE.innerText = STATE.innerText === "Terminé" ? "En cours" : "Terminé";
-         STATE.classList.toggle("btn-primary")
-         STATE.classList.toggle("btn-secondary")
-      })
-   })
 
-   /********************************/
-   /*Removing Task And Task Card */
-   /********************************/
-   let removeTaskButtons = document.querySelectorAll('#remove_task')
-   removeTaskButtons = Array.from(removeTaskButtons)
-
-   removeTaskButtons.forEach((event, i) => {
-      event.addEventListener('click', function () {
-         removeTask(removeTaskButtons, event, i);
-      })
-   })
-   function removeTask(collection, elt, index) {
-      collection.splice(index, 1);
-      elt.parentElement.parentElement.parentElement.remove();
-
-   }
 
    /********************************/
    /*Show  Task details And Task Card */
@@ -215,15 +291,24 @@ window.onload = (e) => {
    })
    function handlingDetailsModalContentTask(index) {
       const currentCard = taskCards[index];
-      let taskTitle = currentCard.querySelector('#priority')
+      let taskTitle = currentCard.querySelector('.priority')
       document.querySelector('#details_task_title').innerHTML = taskTitle.textContent
-      let taskDescrption = currentCard.querySelector('#description')
+      let taskDescrption = currentCard.querySelector('.description')
       document.querySelector('#details_task_description').innerHTML = taskDescrption.textContent
-      let taskState = currentCard.querySelector('#state');
+      let taskState = currentCard.querySelector('.state');
       document.querySelector('#details_task_state').innerHTML = taskState.textContent
-      let taskDeadline = currentCard.querySelector('#deadline')
+      let taskDeadline = currentCard.querySelector('.deadline')
       document.querySelector('#details_task_deadline').innerHTML = taskDeadline.textContent
    }
+
+   /********************************/
+   /*Edit  Task details And Task Card */
+   /********************************/
+   document.querySelector('#add_modal_button').addEventListener('click', function () {
+      formModal.reset()
+      document.querySelector('h5#modal_title').innerHTML = "Ajouter tâche";
+      document.querySelector('#add_modal_trigger').click();
+   })
 
    /********************************/
    /*Edit  Task details And Task Card */
@@ -232,6 +317,7 @@ window.onload = (e) => {
    editTaskButtons.forEach((event, i) => {
       event.addEventListener('click', function () {
          editTaskDetails(i)
+         document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
          document.querySelector('#add_modal_trigger').click()
       })
    })
@@ -239,17 +325,17 @@ window.onload = (e) => {
    function editTaskDetails(index) {
       formModal.reset()
       const currentCard = taskCards[index];
-      let taskTitle = currentCard.querySelector('#priority')
+      let taskTitle = currentCard.querySelector('.priority')
       taskTitleInput.value = taskTitle.innerText
-      let taskDescrption = currentCard.querySelector('#description')
+      let taskDescrption = currentCard.querySelector('.description')
       taskDescrptionInput.value = taskDescrption.innerText.split("\n").join('')
-      let taskState = currentCard.querySelector('#state');
+      let taskState = currentCard.querySelector('.state');
       document.querySelector('#details_task_state').innerHTML = taskState.innerText
       // new Date().toUTCString('fr-FR')
       // new Date().toLocaleDateString('fr-FR')
       // new Date().toLocaleTimeteString('fr-FR')
       // new Date().toLocaleString('fr-FR')
-      let taskDeadline = currentCard.querySelector('#deadline')
+      let taskDeadline = currentCard.querySelector('.deadline')
       let date = new Date()
       taskDeadlineInput.value =
          date.getUTCFullYear() + "-" + date.getUTCDate() + "-" + date.getUTCMonth()

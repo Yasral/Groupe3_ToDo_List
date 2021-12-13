@@ -30,6 +30,7 @@
 
 <body>
     <div class="container">
+        <button class="btn btn-warning" id="add_btn">Add</button>
         <div class=" p-2 d-flex justify-content-end my-5 align-items-center">
             <!-- <div class="input-group ">
                  <div class="form-outline">
@@ -40,155 +41,22 @@
                 </a>
             </div> -->
             <!-- details Button trigger modal -->
-            <button type="button" id="details_modal_trigger" class="btn btn-sm btn-secondary d-none" data-toggle="modal" data-target="#showDetailsModal">
+            <button type="button" id="details_modal_trigger" class="btn btn-sm btn-secondary d-none" data-toggle="modal"
+                data-target="#showDetailsModal">
                 Details
             </button>
             <!-- details Button trigger modal -->
-            <button  type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_trigger" data-toggle="modal" data-target="#addTaskModal">
+            <button type="button" class="btn btn-sm btn-danger ml-4 d-none" id="add_modal_trigger" data-toggle="modal"
+                data-target="#addTaskModal">
+                <i class="fa fa-plus"></i> <span>Ajout de tache</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_button" data-toggle="modal"
+                data-target="#addTaskModal">
                 <i class="fa fa-plus"></i> <span>Ajout de tache</span>
             </button>
         </div>
         <div class="row d-grid  row-cols-1  sp-grid-gap" id="task_container">
-            <div class="card px-0" data-id="" id="card-0" >
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-secondary" id="priority"><i class="fa fa-star"></i> Faible
-                        </button>
-                    </div>
-                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-title" id="title">Special title treatment</h6>
-                        <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
-                            pariatur
-                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
-                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
-                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
-                </div>
-                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
 
-                    <div class="d-inline">
-                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
-                            title="terminer tache">
-                            <i class="fa fa-check"></i>
-                        </a>
-                        <a href="#" class="border-0 btn-transition btn btn-outline-warning" id="edit_task"
-                            title="editer tache">
-                            <i class="fas fa-edit"> </i>
-                        </a>
-                        <a class="border-0 btn-transition btn btn-outline-danger" title="supprimer tache"
-                            id="remove_task"> <i class="fa fa-trash"></i>
-                        </a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="card px-0" data-id="" id="card-0" >
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-secondary" id="priority"><i class="fa fa-star"></i> Faible
-                        </button>
-                    </div>
-                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-title" id="title">Special title treatment</h5>
-                        <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
-                            pariatur
-                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
-                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
-                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
-                </div>
-                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
-
-                    <div class="d-inline">
-                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
-                            title="terminer tache">
-                            <i class="fa fa-check"></i>
-                        </a>
-                        <a href="#" class="border-0 btn-transition btn btn-outline-warning" id="edit_task"
-                            title="editer tache">
-                            <i class="fas fa-edit"> </i>
-                        </a>
-                        <a class="border-0 btn-transition btn btn-outline-danger" title="supprimer tache"
-                            id="remove_task"> <i class="fa fa-trash"></i>
-                        </a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="card px-0" data-id="" id="card-0">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-secondary" id="priority"><i class="fa fa-star"></i> Faible
-                        </button>
-                    </div>
-                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-title" id="title">Special title treatment</h5>
-                        <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
-                            pariatur
-                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
-                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
-                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
-                </div>
-                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
-
-                    <div class="d-inline">
-                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
-                            title="terminer tache">
-                            <i class="fa fa-check"></i>
-                        </a>
-                        <a href="#" class="border-0 btn-transition btn btn-outline-warning" id="edit_task"
-                            title="editer tache">
-                            <i class="fas fa-edit"> </i>
-                        </a>
-                        <a class="border-0 btn-transition btn btn-outline-danger" title="supprimer tache"
-                            id="remove_task"> <i class="fa fa-trash"></i>
-                        </a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="card px-0" data-id="" id="card-0" >
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="d-inline">
-                        <button class="border-0 btn-transition btn btn-outline-secondary" id="priority"><i class="fa fa-star"></i> Faible
-                        </button>
-                    </div>
-                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> En cours</button>
-                </div>
-                <div class="card-body">
-                    <h6 class="card-title" id="title">Special title treatment</h5>
-                        <p class="card-text" id="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa fugit
-                            pariatur
-                            eveniet in at iure repellat facilis consequuntur, perspiciatis temporibus nesciunt quod
-                            explicabo earum aperiam consequatur eum? Soluta, ipsam aliquam!</p>
-                        <!-- <a href="#" class="btn btn-primary fs-small">Go somewhere</a> -->
-                </div>
-                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
-                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b> Sun, 12 Dec 2021 09:20:57 GMT</strong>
-
-                    <div class="d-inline">
-                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
-                            title="terminer tache">
-                            <i class="fa fa-check"></i>
-                        </a>
-                        <a href="#" class="border-0 btn-transition btn btn-outline-warning" id="edit_task"
-                            title="editer tache">
-                            <i class="fas fa-edit"> </i>
-                        </a>
-                        <a class="border-0 btn-transition btn btn-outline-danger" title="supprimer tache"
-                            id="remove_task"> <i class="fa fa-trash"></i>
-                        </a>
-
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -202,15 +70,16 @@
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h5 class="modal-title" id="details_task_title">Tache 1 </h5>
-                        <button
-                            class="btn btn-sm ps-4 btn-primary py-0 fs-x-small mx-2" id="details_task_state">En cours</button></h5>
+                    <button class="btn btn-sm ps-4 btn-primary py-0 fs-x-small mx-2" id="details_task_state">En
+                        cours</button></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <h6>Description</h6>
-                    <p id="details_task_description">Lorem ipsum dolor deleniti, veritatis illum, atque distinctio voluptatibus facere at a dolorum
+                    <p id="details_task_description">Lorem ipsum dolor deleniti, veritatis illum, atque distinctio
+                        voluptatibus facere at a dolorum
                         obcaecati doloremque quidem rem sint quisquam, et sequi consequatur minus voluptatem aut?</p>
                     <h6 class="d-inline-block">Status :</h6>
                     <p class="d-inline" id="details_task_state">Eleve</p>
@@ -246,7 +115,8 @@
                         </div>
                         <div class="form-group">
                             <label for="task_deadline">Date limite</label>
-                            <input type="datetime-local" class="form-control" id="task_deadline" value="2021-01-12T19:30"/>
+                            <input type="datetime-local" class="form-control" id="task_deadline"
+                                value="2021-01-12T19:30" />
                         </div>
                         <div class="form-group">
                             <label for="task_description">Description</label>
@@ -288,6 +158,7 @@
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="./js/script.js"></script>
+    <!-- <script type="module" src="./js/index.js"></script> -->
 </body>
 
 </html>
