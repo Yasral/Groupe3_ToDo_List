@@ -76,6 +76,18 @@ window.onload = (e) => {
          elt.parentElement.parentElement.parentElement.remove();
 
       }
+      /********************************/
+      /*Edit  Task details And Task Card */
+      /********************************/
+      let editTaskButtons = document.querySelectorAll('.edit_task')
+      editTaskButtons.forEach((element, i) => {
+         element.addEventListener('click', function () {
+            const currentCard = taskCards[i];
+            editTaskDetails(currentCard, i)
+            document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
+            document.querySelector('#add_modal_trigger').click()
+         })
+      })
 
    });
 
@@ -206,7 +218,6 @@ window.onload = (e) => {
 
       const deadLineElement = document.createElement("strong")
       deadLineElement.innerHTML = '<i class="fas fa-calendar-day"></i> <b>Date Limite:</b>';
-      // deadLineElement.setAttribute("id", "");
       deadLineElement.setAttribute("class", "fs-x-small deadline");
       deadLineElement.innerHTML = task.dateLimite;//✅
 
@@ -285,20 +296,21 @@ window.onload = (e) => {
 
    showDetailsTextTrigger.forEach((event, i) => {
       event.addEventListener('click', function () {
-         handlingDetailsModalContentTask(i)
+         const currentCard = taskCards[i];
+
+         handlingDetailsModalContentTask(currentCard)
          document.querySelector('#details_modal_trigger').click()
       })
    })
-   function handlingDetailsModalContentTask(index) {
-      const currentCard = taskCards[index];
+   function handlingDetailsModalContentTask(currentCard) {
       let taskTitle = currentCard.querySelector('.priority')
-      document.querySelector('#details_task_title').innerHTML = taskTitle.textContent
+      document.querySelector('#details_task_title').innerText = taskTitle.textContent
       let taskDescrption = currentCard.querySelector('.description')
-      document.querySelector('#details_task_description').innerHTML = taskDescrption.textContent
+      document.querySelector('#details_task_description').innerText = taskDescrption.innerText
       let taskState = currentCard.querySelector('.state');
-      document.querySelector('#details_task_state').innerHTML = taskState.textContent
+      document.querySelector('#details_task_state').innerText = taskState.innerText
       let taskDeadline = currentCard.querySelector('.deadline')
-      document.querySelector('#details_task_deadline').innerHTML = taskDeadline.textContent
+      document.querySelector('#details_task_deadline').innerText = taskDeadline.innerText
    }
 
    /********************************/
@@ -310,25 +322,15 @@ window.onload = (e) => {
       document.querySelector('#add_modal_trigger').click();
    })
 
-   /********************************/
-   /*Edit  Task details And Task Card */
-   /********************************/
-   let editTaskButtons = document.querySelectorAll('#edit_task')
-   editTaskButtons.forEach((event, i) => {
-      event.addEventListener('click', function () {
-         editTaskDetails(i)
-         document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
-         document.querySelector('#add_modal_trigger').click()
-      })
-   })
 
-   function editTaskDetails(index) {
+
+   function editTaskDetails(currentCard) {
       formModal.reset()
-      const currentCard = taskCards[index];
-      let taskTitle = currentCard.querySelector('.priority')
+      let taskTitle = currentCard.querySelector('.card-title.title')
       taskTitleInput.value = taskTitle.innerText
       let taskDescrption = currentCard.querySelector('.description')
-      taskDescrptionInput.value = taskDescrption.innerText.split("\n").join('')
+      // taskDescrptionInput.value = taskDescrption.innerText.split("\n").join('')
+      taskDescrptionInput.value = taskDescrption.innerText
       let taskState = currentCard.querySelector('.state');
       document.querySelector('#details_task_state').innerHTML = taskState.innerText
       // new Date().toUTCString('fr-FR')
