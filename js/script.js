@@ -191,14 +191,14 @@ window.onload = (e) => {
          ajoutTache(titre, dateLimite, description, radios);
          })
       })
-      // const ajoutTache  = async(t,date, desc, prior ) => {
-      //    const docRef = await addDoc(collection(database, "Taches"), {
-      //       "titre": t,
-      //       "dateLimite": date,
-      //       "description": desc,
-      //       "priorite": prior
-      //     });
-      // } 
+      const ajoutTache  = async(t,date, desc, prior ) => {
+         const docRef = await addDoc(collection(database, "Taches"), {
+            "titre": t,
+            "dateLimite": date,
+            "description": desc,
+            "priorite": prior
+          });
+      } 
 
    let taskCards = document.querySelectorAll('.card')
 
