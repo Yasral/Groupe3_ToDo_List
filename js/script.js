@@ -65,24 +65,21 @@ window.onload = (e) => {
 
 
       /********************************/
-      /*Removing Task And Task Card */
+      /*Removing Task  by click delete button */
       /********************************/
-      let removeTaskButtons = document.querySelectorAll('.remove_task')
+      let removeTaskButtons = [...document.querySelectorAll('.remove_task')]
       console.log(removeTaskButtons);
-
       removeTaskButtons.forEach((element, i) => {
+
          element.addEventListener('click', () => {
-            removeTask(removeTaskButtons, element, i);
+            const currentCard = taskCards[i];
+
+            removeTask(currentCard.dataset.id);
+            currentCard.remove()
+            removeTaskButtons.splice(i, 1);
          })
       })
-      const removeTask = (collection, elt, index) => {
-         //Backend
-
-         //Front End
-         collection.splice(index, 1);
-         elt.parentElement.parentElement.parentElement.remove();
-
-      }
+   
       /********************************/
       /*Edit  Task details And Task Card */
       /********************************/
@@ -125,6 +122,18 @@ window.onload = (e) => {
          await updateDoc(doc(db, "tasks", id), { "etat": nextStateValue });
       } catch (e) {
          console.error("Error Updating Task: ", e);
+         alert("Error Updating Task ");
+      }
+   }
+   /********************************/
+   /*Remove a state task in databases */
+   /********************************/
+   async function removeTask(id) {
+      try {
+         await deleteDoc(doc(db, "tasks", id));
+      } catch (e) {
+         console.error("Error Deleting Task: ", e);
+         alert("Error Deleting Task: ");
       }
    }
 
@@ -149,9 +158,8 @@ window.onload = (e) => {
 
 
    /********************************/
-   /*Create Card Element */
+   /*Create Some Card Element */
    /********************************/
-   // const tasksCollection = getTasksList(db);
    const task1 = {
       titre: "Titre 1",
       description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, corrupti.",
