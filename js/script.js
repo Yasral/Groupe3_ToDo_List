@@ -2,7 +2,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 
 
-import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, getDocs, doc, query, where, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { getFirestore, collection, updateDoc, addDoc, deleteDoc, getDocs, getDoc, doc, query, where, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 window.onload = (e) => {
 
 
@@ -36,24 +36,28 @@ window.onload = (e) => {
       // get all occurence/items in the tasks table
       const tasksCollection = collection(db, 'tasks');
       const taskSnapshot = await getDocs(tasksCollection);
-      let taskList = taskSnapshot.docs.map(doc => doc.data());
+      let taskList = taskSnapshot.docs.map(doc => {
+         return { "data": doc.data(), "id": doc.id }
+      });
       return taskList
 
-   }
-   getTasksList(db).then(data => {
-      displayAllElements(data);
-      let taskCards = document.querySelectorAll('.card')
 
+   }
+   getTasksList(db).then(taskList => {
+      displayAllElements(taskList);
+      let taskCards = document.querySelectorAll('.card')
       /********************************/
       /*Mark  Task As finished */
       /********************************/
       let finishTaskButtons = document.querySelectorAll('.finish_task')
-      console.log(finishTaskButtons);
       finishTaskButtons.forEach((element, i) => {
          element.addEventListener('click', function (e) {
             const currentCard = taskCards[i];
             let stateElement = currentCard.querySelector('.state');
             stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
+            //Backend
+            updateStateTask(currentCard.dataset.id, stateElement.innerText);
+            //Frontend
             stateElement.classList.toggle("btn-primary")
             stateElement.classList.toggle("btn-secondary")
          })
@@ -67,11 +71,14 @@ window.onload = (e) => {
       console.log(removeTaskButtons);
 
       removeTaskButtons.forEach((element, i) => {
-         element.addEventListener('click', function () {
+         element.addEventListener('click', () => {
             removeTask(removeTaskButtons, element, i);
          })
       })
-      function removeTask(collection, elt, index) {
+      const removeTask = (collection, elt, index) => {
+         //Backend
+
+         //Front End
          collection.splice(index, 1);
          elt.parentElement.parentElement.parentElement.remove();
 
@@ -83,40 +90,62 @@ window.onload = (e) => {
       editTaskButtons.forEach((element, i) => {
          element.addEventListener('click', function () {
             const currentCard = taskCards[i];
-            editTaskDetails(currentCard, i)
+            editTaskDetails(currentCard)
             document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
-            document.querySelector('#add_modal_trigger').click()
+            document.querySelector('#add_modal_trigger').click();
+
+            let stateElement = currentCard.querySelector('.state');
+            document.querySelector('#btn_add').addEventListener('click', () => {
+               handlingInputs();
+               updateTask(task, newState);
+            })
          })
       })
 
+
+
    });
 
+   /********************************/
+   /*Update a task in databases */
+   /********************************/
+   async function updateTask(task, newState) {
+      // To update age and favorite color:
+      await updateDoc(task, {
+         "etat": newState,
+      });
 
+   }
+   /********************************/
+   /*Update a state task in databases */
+   /********************************/
+   async function updateStateTask(id, nextStateValue) {
+      // let taskRef = await getDoc(doc(db, "tasks", id));
+      try {
+         await updateDoc(doc(db, "tasks", id), { "etat": nextStateValue });
+      } catch (e) {
+         console.error("Error Updating Task: ", e);
+      }
+   }
 
    /********************************/
    /*Insert a task in databases */
    /********************************/
-   async function InsertInDatabase(newTask) {
-      const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
+   async function addTask() {
+      const newTask = {
+         titre: "Titre 111",
+         description: "Dolor sit, amet consectetur adipisicing elit. Eligendi, corrupti.",
+         priorite: "elevee",
+         dateLimite: "Sun, 18 Dec 2021 09:20:57 GMT",
+         etat: "En cours"
+      };
+      try {
+         const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
+         console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+         console.error("Error adding TAsk: ", e);
+      }
    }
-
-
-   // ===================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
    /********************************/
@@ -139,12 +168,16 @@ window.onload = (e) => {
    };
 
 
-   function createCardElement(task) {
+   function createCardElement(task, refIid) {
 
       const htmlStateElement = document.createElement("span");
       htmlStateElement.innerText = task.etat;//✅
+      if (task.etat == "Terminé") {
+         htmlStateElement.setAttribute("class", "btn btn-small btn-secondary fs-x-small py-0 state");
+      } else {
+         htmlStateElement.setAttribute("class", "btn btn-small btn-primary fs-x-small py-0 state");
+      }
       // htmlStateElement.setAttribute("id", "");
-      htmlStateElement.setAttribute("class", "btn btn-small btn-primary fs-x-small py-0 state");
       // ⭐⭐
       let htmlStarElement = document.createElement("i");
       htmlStarElement.setAttribute("class", "fa fa-star");
@@ -229,6 +262,8 @@ window.onload = (e) => {
 
       const cardElement = document.createElement("div")
       cardElement.setAttribute("class", "card px-0");
+      cardElement.setAttribute("class", "card px-0");
+      cardElement.dataset.id = refIid;
       cardElement.appendChild(cardHeaderElement);
       cardElement.appendChild(cardBodyElement);
       cardElement.appendChild(cardFooterElement);
@@ -239,12 +274,13 @@ window.onload = (e) => {
    /********************************/
    /*Display all Cards */
    /********************************/
-   function displayAllElements(tasks) {
+   function displayAllElements(taskList) {
       let task_container = document.getElementById("task_container")
-      tasks.forEach(task => {
-         task_container.appendChild(createCardElement(task));
+      taskList.forEach(task => {
+         task_container.appendChild(createCardElement(task.data, task.id));
       })
    }
+
    /********************************/
    /* */
    /********************************/
@@ -338,12 +374,12 @@ window.onload = (e) => {
       // new Date().toLocaleTimeteString('fr-FR')
       // new Date().toLocaleString('fr-FR')
       let taskDeadline = currentCard.querySelector('.deadline')
-      let date = new Date()
-      taskDeadlineInput.value =
-         date.getUTCFullYear() + "-" + date.getUTCDate() + "-" + date.getUTCMonth()
-         + "T"
-         + date.getUTCHours() + ":" + date.getUTCMinutes();
-
+      // let date = new Date()
+      // taskDeadlineInput.value =
+      //    date.getUTCFullYear() + "-" + date.getUTCDate() + "-" + date.getUTCMonth()
+      //    + "T"
+      // + date.getUTCHours() + ":" + date.getUTCMinutes();
+      taskDeadlineInput.value = taskDeadline.value
 
       taskPriorityInput = document.querySelector('[name="task_priority"]:checked')
       document.querySelector(`input[name="task_priority"][value="${taskPriorityInput.value}"]`).checked = true
