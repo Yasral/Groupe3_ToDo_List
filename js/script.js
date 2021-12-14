@@ -1,3 +1,21 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import {
+   getFirestore, collection, onSnapshot, addDoc, deleteDoc, getDocs, doc,
+   query, where, orderBy
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+const firebaseConfig = {
+   apiKey: "AIzaSyDQg3ALrJN28q3B--xTzY6M_I941xC54fA",
+   authDomain: "todo-list-2f690.firebaseapp.com",
+   projectId: "todo-list-2f690",
+   storageBucket: "todo-list-2f690.appspot.com",
+   messagingSenderId: "612806470513",
+   appId: "1:612806470513:web:3feb31fd6d37b1bc1c24d0"
+};
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  // Get a reference to the database service
+  const database = getDatabase(app);
 window.onload = (e) => {
    /********************************/
    /*Create Card Element */
@@ -11,6 +29,7 @@ window.onload = (e) => {
       dateLimite: "Sun, 12 Dec 2021 09:20:57 GMT",
       etat: "En cours"
    };
+
    const task2 = {
       titre: "Titre 2",
       description: "Amet consectetur adipisicing elit. Eligendi, corrupti.  amet consectetur adipisicing elit. Eligendi, corrupti.",
@@ -18,11 +37,11 @@ window.onload = (e) => {
       dateLimite: "Sun, 14 Dec 2021 09:20:57 GMT",
       etat: "En cours"
    };
+
    tasksCollection.push(task1)
    tasksCollection.push(task2)
 
    function createCardElement(task) {
-
       const htmlStateElement = document.createElement("span");
       htmlStateElement.innerText = task.etat;//✅
       htmlStateElement.setAttribute("id", "state");
@@ -49,7 +68,6 @@ window.onload = (e) => {
       cardHeaderElement.setAttribute('class', "card-header d-flex justify-content-between align-items-center")
       cardHeaderElement.appendChild(parentHTMLPriorityElement)
       cardHeaderElement.appendChild(htmlStateElement)
-
 
       let textDescriptionElement = document.createElement('p')
       textDescriptionElement.setAttribute('class', "card-text")
@@ -98,7 +116,6 @@ window.onload = (e) => {
       actionsParentElement.appendChild(parentEditElement);
       actionsParentElement.appendChild(parentTrashElement);
 
-
       const deadLineElement = document.createElement("strong")
       deadLineElement.innerHTML = '<i class="fas fa-calendar-day"></i> <b>Date Limite:</b>';
       deadLineElement.setAttribute("id", "deadline");
@@ -110,19 +127,17 @@ window.onload = (e) => {
       cardFooterElement.appendChild(deadLineElement)
       cardFooterElement.appendChild(actionsParentElement)
 
-
       const cardElement = document.createElement("div")
       cardElement.setAttribute("class", "card px-0");
       cardElement.appendChild(cardHeaderElement);
       cardElement.appendChild(cardBodyElement);
       cardElement.appendChild(cardFooterElement);
-
       return cardElement;
-
    }
    /********************************/
    /*Display all CArds */
    /********************************/
+
    function displayAllElements(tasks) {
       tasks.forEach(task => {
          task_container.appendChild(createCardElement(task));
@@ -133,27 +148,26 @@ window.onload = (e) => {
    /********************************/
    /* */
    /********************************/
+
    let formModal = document.querySelector(".form-modal")
    let detailsModal = document.querySelector(".showDetailsModal")
    let taskTitleInput = document.getElementById("task_title")
    let taskDescrptionInput = document.getElementById("task_description")
    let taskDeadlineInput = document.getElementById("task_deadline")
    let taskPriorityInput;
-
    let addButton = document.querySelector('#btn_add')
 
    /********************************/
    /*Handling inputs */
    /********************************/
 
-   function HandlingInputs(e) {
+   function ControlleSaisie(e) {
       if (taskTitleInput.value == "" || taskDescrptionInput.value == "" || taskDeadlineInput.value == "") {
          taskTitleInput.style.borderColor = taskTitleInput.value != "" ? "initial" : "red";
          taskDescrptionInput.style.borderColor = taskDescrptionInput.value != "" ? "initial" : "red";
          taskDeadlineInput.style.borderColor = taskDeadlineInput.value != "" ? "initial" : "red";
          let error = document.querySelector('#error')
          error.classList.toggle('d-none')
-
          e.preventDefault()
       } else {
          taskPriorityInput = document.querySelector('[name="task_priority"]:checked')
@@ -165,15 +179,33 @@ window.onload = (e) => {
          document.querySelector('#close_add_task_modal').click()
       }
    }
-
    addButton.addEventListener("click", function (e) {
-      HandlingInputs(e)
-   })
+      ControlleSaisie(e)
+
+   //ajouter les données saisis au niveau de la base de donnée
+      document.getElementById('btn_add').addEventListener('click',  () => {
+         var titre = document.getElementById('task_title').value;
+         var dateLimite = document.getElementById('task_deadline').value;
+         var description = document.getElementById('task_description').value;
+         var radios = document.querySelector('input[name ="task_priority"]:checked').value;
+         ajoutTache(titre, dateLimite, description, radios);
+         })
+      })
+      // const ajoutTache  = async(t,date, desc, prior ) => {
+      //    const docRef = await addDoc(collection(database, "Taches"), {
+      //       "titre": t,
+      //       "dateLimite": date,
+      //       "description": desc,
+      //       "priorite": prior
+      //     });
+      // } 
 
    let taskCards = document.querySelectorAll('.card')
+
    /********************************/
    /*Mark  Task As finished */
    /********************************/
+
    let finishTaskButtons = document.querySelectorAll('#finish_task')
    finishTaskButtons.forEach((event, i) => {
       event.addEventListener('click', function () {
@@ -184,13 +216,11 @@ window.onload = (e) => {
          STATE.classList.toggle("btn-secondary")
       })
    })
-
    /********************************/
    /*Removing Task And Task Card */
    /********************************/
    let removeTaskButtons = document.querySelectorAll('#remove_task')
    removeTaskButtons = Array.from(removeTaskButtons)
-
    removeTaskButtons.forEach((event, i) => {
       event.addEventListener('click', function () {
          removeTask(removeTaskButtons, event, i);
@@ -199,9 +229,7 @@ window.onload = (e) => {
    function removeTask(collection, elt, index) {
       collection.splice(index, 1);
       elt.parentElement.parentElement.parentElement.remove();
-
    }
-
    /********************************/
    /*Show  Task details And Task Card */
    /********************************/
@@ -245,7 +273,6 @@ window.onload = (e) => {
          document.querySelector('#add_modal_trigger').click()
       })
    })
-
    function editTaskDetails(index) {
       formModal.reset()
       const currentCard = taskCards[index];
@@ -269,9 +296,5 @@ window.onload = (e) => {
       taskPriorityInput = document.querySelector('[name="task_priority"]:checked')
       document.querySelector(`input[name="task_priority"][value="${taskPriorityInput.value}"]`).checked = true
    }
-
-
-
-
 }
 
