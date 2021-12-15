@@ -107,7 +107,7 @@ window.onload = (e) => {
 
          // let currentCard = document.querySelectorAll(".card")[parseInt(id)]
          let oldCard = document.querySelector(`.card[data-id="${id}"]`)
-         let newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length )
+         let newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length)
          console.log(oldCard, newCard);
          oldCard.parentElement.replaceChild(newCard, oldCard)
          // newCard.querySelector('.d-inline').outerHTML = oldCard.querySelector('.d-inline').outerHTML
@@ -387,6 +387,11 @@ window.onload = (e) => {
    /********************************/
    document.querySelector('#add_modal_button').addEventListener('click', function () {
       formModal.reset()
+      taskTitleInput.style.borderColor = "initial";
+      taskDescriptionInput.style.borderColor = "initial";
+      taskDeadlineInput.style.borderColor = "initial";
+      let error = document.querySelector('#error')
+      error.classList.add('d-none')
       document.querySelector('h5#modal_title').innerHTML = "Ajouter tâche";
       document.querySelector('#submit').innerText = "Valider"
       document.querySelector('#submit').classList.remove('btn-warning')
@@ -401,6 +406,11 @@ window.onload = (e) => {
 
    const updateModal = (currentCard) => {
       formModal.reset()
+      taskTitleInput.style.borderColor =  "initial";
+      taskDescriptionInput.style.borderColor =  "initial";
+      taskDeadlineInput.style.borderColor =  "initial";
+      let error = document.querySelector('#error')
+      error.classList.add('d-none')
       document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
       document.querySelector('#submit').innerText = "Mettre à jour"
       document.querySelector('#submit').classList.toggle('btn-danger')
@@ -417,22 +427,8 @@ window.onload = (e) => {
       document.querySelector('#details_task_state').innerHTML = taskState.innerText
       taskDeadlineInput.value = new Date(taskDeadline.innerText).toISOString().substring(0, 16)
       document.querySelector(`input[name="task_priority"][value="${taskPriority.innerText}"]`).checked = true
-      
+
       document.querySelector('#add_modal_trigger').click();
-   }
-   const updateCard = (currentCard) => {
-      let taskTitle = currentCard.querySelector('.card-title.title')
-      let taskDescrption = currentCard.querySelector('.description')
-      let taskState = currentCard.querySelector('.state');
-      let taskPriority = currentCard.querySelector('.priority span')
-      let taskDeadline = currentCard.querySelector('.deadline')
-      taskTitle.innerText = document.querySelector('#task_title').value
-      taskDescrption.innerText = document.querySelector('#task_description').value
-      taskState.innerText = document.querySelector('#details_task_state').innerHTML
-      // taskDeadlineInput.value = new Date(taskDeadline.innerText).toISOString().substring(0, 16)
-      taskDeadline.innerText = new Date(taskDeadlineInput.value).toUTCString()
-      taskPriority.innerText = document.querySelector(`input[name="task_priority"]:checked`).value
-      formModal.reset()
    }
 
 
