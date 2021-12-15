@@ -1,4 +1,3 @@
-// import { initializeApp } from "./firebase/app";
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 
 
@@ -46,56 +45,6 @@ window.onload = (e) => {
    getTasksList(db).then(taskList => {
       displayAllElements(taskList);
       let taskCards = document.querySelectorAll('.card')
-      /********************************/
-      /*Mark  Task As finished */
-      /********************************/
-      // let finishTaskButtons = document.querySelectorAll('.finish_task')
-      // finishTaskButtons.forEach((element, i) => {
-      //    element.addEventListener('click', function (e) {
-      //       const currentCard = taskCards[i];
-      //       let stateElement = currentCard.querySelector('.state');
-      //       stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
-      //       //Backend
-      //       updateStateTask(currentCard.dataset.id, stateElement.innerText);
-      //       //Frontend
-      //       stateElement.classList.toggle("btn-primary")
-      //       stateElement.classList.toggle("btn-secondary")
-      //    })
-      // });
-
-
-      /********************************/
-      /*Removing Task  by click delete button */
-      // /********************************/
-      // let removeTaskButtons = [...document.querySelectorAll('.remove_task')]
-      // console.log(removeTaskButtons);
-      // removeTaskButtons.forEach((element, i) => {
-
-      //    element.addEventListener('click', () => {
-      //       const currentCard = taskCards[i];
-
-      //       removeTask(currentCard.dataset.id);
-      //       currentCard.remove()
-      //       removeTaskButtons.splice(i, 1);
-      //    })
-      // })
-
-      /********************************/
-      /*Edit  Task details And Task Card */
-      /********************************/
-      // let editTaskButtons = document.querySelectorAll('.edit_task')
-      // editTaskButtons.forEach((element, i) => {
-      //    element.addEventListener('click', function () {
-      //       const currentCard = taskCards[i];
-      //       updateModal(currentCard)
-      //       addButton.addEventListener("click", (e) => {
-      //          submitForm(e, currentCard.dataset.id);
-      //       })
-      //    })
-      // })
-
-
-
    });
 
    /********************************/
@@ -104,14 +53,11 @@ window.onload = (e) => {
    async function updateTask(id, taskUpdated) {
       try {
          const task = await getDoc(doc(db, "tasks", id))
-         taskUpdated.etat = task.data().etat 
-         console.log(task.data());
-         await updateDoc(doc(db, "tasks", id), { ...taskUpdated});
+         taskUpdated.etat = task.data().etat
+         await updateDoc(doc(db, "tasks", id), { ...taskUpdated });
 
-         // let currentCard = document.querySelectorAll(".card")[parseInt(id)]
          const oldCard = document.querySelector(`.card[data-id="${id}"]`)
          const newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length)
-         console.log(oldCard, newCard);
          oldCard.parentElement.replaceChild(newCard, oldCard)
       } catch (e) {
          console.error("Error Updating Task: ", e);
@@ -147,21 +93,11 @@ window.onload = (e) => {
    /*Insert a task in databases */
    /********************************/
    async function addTask(newTask) {
-      // const newTask = {
-      //    titre: "Titre 111",
-      //    description: "Dolor sit, amet consectetur adipisicing elit. Eligendi, corrupti.",
-      //    priorite: "elevee",
-      //    dateLimite: "Sun, 18 Dec 2021 09:20:57 GMT",
-      //    etat: "En cours"
-      // };
       try {
          const taskRef = await addDoc(collection(db, "tasks"), { ...newTask });
          const taskObj = await getDoc(doc(db, "tasks", taskRef.id))
-         console.log(taskRef, taskRef.id, taskObj.data());
          const newCard = createCardElement(taskObj.data(), taskRef.id, document.querySelectorAll('.card').length)
-         console.log("card_container", card_container);
          document.querySelector('.row#card_container').insertAdjacentElement('afterbegin', newCard);
-         console.log("Document written with ID: ", taskRef.id);
       } catch (e) {
          console.error("Error adding TAsk: ", e);
       }
@@ -287,19 +223,28 @@ window.onload = (e) => {
       cardElement.appendChild(cardBodyElement);
       cardElement.appendChild(cardFooterElement);
 
-
+      /********************************/
+      /*Edit Task */
+      /********************************/
       cardElement.querySelector('.edit_task').addEventListener('click', () => {
          updateModal(cardElement)
          addButton.addEventListener("click", (e) => {
             submitForm(e, cardElement.dataset.id);
          })
       })
+
+      /********************************/
+      /*Remove Task  */
+      /********************************/
       cardElement.querySelector('.remove_task').addEventListener('click', () => {
          removeTask(cardElement.dataset.id);
          cardElement.remove()
          // removeTaskButtons.splice(i, 1);
       })
 
+      /********************************/
+      /*Mark task as ended */
+      /********************************/
       cardElement.querySelector('.finish_task').addEventListener('click', (e) => {
          let stateElement = cardElement.querySelector('.state');
          stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
@@ -319,7 +264,6 @@ window.onload = (e) => {
    function displayAllElements(taskList) {
       let card_container = document.getElementById("card_container")
       taskList.forEach((task, i) => {
-         console.log(task.data, task.id);
          card_container.appendChild(createCardElement(task.data, task.id, i));
       })
    }
@@ -355,8 +299,6 @@ window.onload = (e) => {
          task.description = taskDescriptionInput.value
          task.priorite = taskPriorityInput.value
          task.dateLimite = new Date(taskDeadlineInput.value).toUTCString()
-         console.log("refId", refId, typeof refId)
-         console.log(refId && refId !== undefined)
          if (refId && refId != undefined) {
             updateTask(refId, task);
          } else {
