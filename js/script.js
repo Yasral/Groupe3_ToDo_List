@@ -49,36 +49,36 @@ window.onload = (e) => {
       /********************************/
       /*Mark  Task As finished */
       /********************************/
-      let finishTaskButtons = document.querySelectorAll('.finish_task')
-      finishTaskButtons.forEach((element, i) => {
-         element.addEventListener('click', function (e) {
-            const currentCard = taskCards[i];
-            let stateElement = currentCard.querySelector('.state');
-            stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
-            //Backend
-            updateStateTask(currentCard.dataset.id, stateElement.innerText);
-            //Frontend
-            stateElement.classList.toggle("btn-primary")
-            stateElement.classList.toggle("btn-secondary")
-         })
-      });
+      // let finishTaskButtons = document.querySelectorAll('.finish_task')
+      // finishTaskButtons.forEach((element, i) => {
+      //    element.addEventListener('click', function (e) {
+      //       const currentCard = taskCards[i];
+      //       let stateElement = currentCard.querySelector('.state');
+      //       stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
+      //       //Backend
+      //       updateStateTask(currentCard.dataset.id, stateElement.innerText);
+      //       //Frontend
+      //       stateElement.classList.toggle("btn-primary")
+      //       stateElement.classList.toggle("btn-secondary")
+      //    })
+      // });
 
 
       /********************************/
       /*Removing Task  by click delete button */
-      /********************************/
-      let removeTaskButtons = [...document.querySelectorAll('.remove_task')]
-      console.log(removeTaskButtons);
-      removeTaskButtons.forEach((element, i) => {
+      // /********************************/
+      // let removeTaskButtons = [...document.querySelectorAll('.remove_task')]
+      // console.log(removeTaskButtons);
+      // removeTaskButtons.forEach((element, i) => {
 
-         element.addEventListener('click', () => {
-            const currentCard = taskCards[i];
+      //    element.addEventListener('click', () => {
+      //       const currentCard = taskCards[i];
 
-            removeTask(currentCard.dataset.id);
-            currentCard.remove()
-            removeTaskButtons.splice(i, 1);
-         })
-      })
+      //       removeTask(currentCard.dataset.id);
+      //       currentCard.remove()
+      //       removeTaskButtons.splice(i, 1);
+      //    })
+      // })
 
       /********************************/
       /*Edit  Task details And Task Card */
@@ -288,12 +288,26 @@ window.onload = (e) => {
       cardElement.appendChild(cardFooterElement);
 
 
-      cardElement.querySelector('.edit_task').addEventListener('click', function () {
-         console.log(cardElement);
+      cardElement.querySelector('.edit_task').addEventListener('click', () => {
          updateModal(cardElement)
          addButton.addEventListener("click", (e) => {
             submitForm(e, cardElement.dataset.id);
          })
+      })
+      cardElement.querySelector('.remove_task').addEventListener('click', () => {
+         removeTask(cardElement.dataset.id);
+         cardElement.remove()
+         // removeTaskButtons.splice(i, 1);
+      })
+
+      cardElement.querySelector('.finish_task').addEventListener('click', (e) => {
+         let stateElement = cardElement.querySelector('.state');
+         stateElement.innerText = stateElement.innerText === "Terminé" ? "En cours" : "Terminé";
+         //Backend
+         updateStateTask(cardElement.dataset.id, stateElement.innerText);
+         //Frontend
+         stateElement.classList.toggle("btn-primary")
+         stateElement.classList.toggle("btn-secondary")
       })
 
       return cardElement;
@@ -305,6 +319,7 @@ window.onload = (e) => {
    function displayAllElements(taskList) {
       let task_container = document.getElementById("task_container")
       taskList.forEach((task, i) => {
+         console.log(task.data, task.id);
          task_container.appendChild(createCardElement(task.data, task.id, i));
       })
    }
@@ -406,9 +421,9 @@ window.onload = (e) => {
 
    const updateModal = (currentCard) => {
       formModal.reset()
-      taskTitleInput.style.borderColor =  "initial";
-      taskDescriptionInput.style.borderColor =  "initial";
-      taskDeadlineInput.style.borderColor =  "initial";
+      taskTitleInput.style.borderColor = "initial";
+      taskDescriptionInput.style.borderColor = "initial";
+      taskDeadlineInput.style.borderColor = "initial";
       let error = document.querySelector('#error')
       error.classList.add('d-none')
       document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
