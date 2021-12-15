@@ -103,21 +103,16 @@ window.onload = (e) => {
    /********************************/
    async function updateTask(id, taskUpdated) {
       try {
-         await updateDoc(doc(db, "tasks", id), { ...taskUpdated });
+         const task = await getDoc(doc(db, "tasks", id))
+         taskUpdated.etat = task.data().etat 
+         console.log(task.data());
+         await updateDoc(doc(db, "tasks", id), { ...taskUpdated});
 
          // let currentCard = document.querySelectorAll(".card")[parseInt(id)]
-         let oldCard = document.querySelector(`.card[data-id="${id}"]`)
-         let newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length)
+         const oldCard = document.querySelector(`.card[data-id="${id}"]`)
+         const newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length)
          console.log(oldCard, newCard);
          oldCard.parentElement.replaceChild(newCard, oldCard)
-         // newCard.querySelector('.d-inline').outerHTML = oldCard.querySelector('.d-inline').outerHTML
-         // console.log(currentCard, taskpUpdated)
-         // return taskpUpdated
-         // oldCard.querySelector('.title').innerText = taskUpdated.titre
-         // oldCard.querySelector('.state').innerText = taskUpdated.etat
-         // oldCard.querySelector('.description').innerText = taskUpdated.description
-         // oldCard.querySelector('.priorite').innerText = taskUpdated.priorite
-         // oldCard.querySelector('.deadline').innerText = taskUpdated.dateLimite
       } catch (e) {
          console.error("Error Updating Task: ", e);
          alert("Error Updating Task ");
@@ -160,8 +155,13 @@ window.onload = (e) => {
       //    etat: "En cours"
       // };
       try {
-         const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
-         console.log("Document written with ID: ", docRef.id);
+         const taskRef = await addDoc(collection(db, "tasks"), { ...newTask });
+         const taskObj = await getDoc(doc(db, "tasks", taskRef.id))
+         console.log(taskRef, taskRef.id, taskObj.data());
+         const newCard = createCardElement(taskObj.data(), taskRef.id, document.querySelectorAll('.card').length)
+         console.log("card_container", card_container);
+         document.querySelector('.row#card_container').insertAdjacentElement('afterbegin', newCard);
+         console.log("Document written with ID: ", taskRef.id);
       } catch (e) {
          console.error("Error adding TAsk: ", e);
       }
@@ -317,10 +317,10 @@ window.onload = (e) => {
    /*Display all Cards */
    /********************************/
    function displayAllElements(taskList) {
-      let task_container = document.getElementById("task_container")
+      let card_container = document.getElementById("card_container")
       taskList.forEach((task, i) => {
          console.log(task.data, task.id);
-         task_container.appendChild(createCardElement(task.data, task.id, i));
+         card_container.appendChild(createCardElement(task.data, task.id, i));
       })
    }
 
@@ -355,10 +355,12 @@ window.onload = (e) => {
          task.description = taskDescriptionInput.value
          task.priorite = taskPriorityInput.value
          task.dateLimite = new Date(taskDeadlineInput.value).toUTCString()
-         task.etat = "En cours"
-         if (refId && refId !== undefined) {
+         console.log("refId", refId, typeof refId)
+         console.log(refId && refId !== undefined)
+         if (refId && refId != undefined) {
             updateTask(refId, task);
          } else {
+            task.etat = "En cours"
             addTask(task)
          }
          document.querySelector('#close_add_task_modal').click()
@@ -428,8 +430,8 @@ window.onload = (e) => {
       error.classList.add('d-none')
       document.querySelector('h5#modal_title').innerHTML = "Modifier tâche"
       document.querySelector('#submit').innerText = "Mettre à jour"
-      document.querySelector('#submit').classList.toggle('btn-danger')
-      document.querySelector('#submit').classList.toggle('btn-warning')
+      document.querySelector('#submit').classList.remove('btn-danger')
+      document.querySelector('#submit').classList.add('btn-warning')
       // currentCard = document.querySelector('.card')[cardId]
       let taskTitle = currentCard.querySelector('.card-title.title')
       let taskDescription = currentCard.querySelector('.description')
