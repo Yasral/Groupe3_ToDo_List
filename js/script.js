@@ -1,13 +1,29 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import {
+   initializeApp
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 
 
-import { getFirestore, collection, updateDoc, addDoc, deleteDoc, getDocs, getDoc, doc, query, where, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import {
+   getFirestore,
+   collection,
+   updateDoc,
+   addDoc,
+   deleteDoc,
+   getDocs,
+   getDoc,
+   doc,
+   query,
+   where,
+   orderBy,
+   Timestamp
+} from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
 window.onload = (e) => {
 
-
-   // const firebaseConfig = {
-
-   //    apiKey: "AIzaSyCPmKwQqsltQlZ22Ok03_Swt6nKEAyuuoU",
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   //The Config of the  group
+   //  const firebaseConfig = {
+      
+      //    apiKey: "AIzaSyCPmKwQqsltQlZ22Ok03_Swt6nKEAyuuoU",
    //    authDomain: "storekeeper-85c99.firebaseapp.com",
    //    projectId: "storekeeper-85c99",
    //    storageBucket: "storekeeper-85c99.appspot.com",
@@ -15,6 +31,9 @@ window.onload = (e) => {
    //    appId: "1:195903507633:web:83961fe8ac827f6e44e690",
    //    // measurementId: "${config.measurementId}"
    // };
+
+   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   //The Own Config 
    const firebaseConfig = {
       apiKey: "AIzaSyCRMEWy6cu1ez4Sv9Ja0eKHhxzJui6AUYQ",
       authDomain: "todoappsimplonbrief.firebaseapp.com",
@@ -29,15 +48,18 @@ window.onload = (e) => {
    const app = initializeApp(firebaseConfig);
    const db = getFirestore(app);
 
-   // Get a list of tasks from the database
+   // Get the whole tasks from the database
    const getTasksList = async (db) => {
-      // const docRef = await addDoc(collection(db, "tasks"), { ...newTask });
-      // get all occurence/items in the tasks table
       const tasksCollection = collection(db, 'tasks');
       const taskSnapshot = await getDocs(tasksCollection);
       let taskList = taskSnapshot.docs.map(doc => {
-         return { "data": doc.data(), "id": doc.id }
+         
+         return {
+            "data": doc.data(),
+            "id": doc.id
+         }
       });
+
       return taskList
 
 
@@ -54,7 +76,9 @@ window.onload = (e) => {
       try {
          const task = await getDoc(doc(db, "tasks", id))
          taskUpdated.etat = task.data().etat
-         await updateDoc(doc(db, "tasks", id), { ...taskUpdated });
+         await updateDoc(doc(db, "tasks", id), {
+            ...taskUpdated
+         });
 
          const oldCard = document.querySelector(`.card[data-id="${id}"]`)
          const newCard = createCardElement(taskUpdated, id, document.querySelectorAll('.card').length)
@@ -71,7 +95,9 @@ window.onload = (e) => {
    /********************************/
    async function updateStateTask(id, nextStateValue) {
       try {
-         await updateDoc(doc(db, "tasks", id), { "etat": nextStateValue });
+         await updateDoc(doc(db, "tasks", id), {
+            "etat": nextStateValue
+         });
       } catch (e) {
          console.error("Error Updating Task State: ", e);
          alert("Error Updating Task State ");
@@ -94,7 +120,9 @@ window.onload = (e) => {
    /********************************/
    async function addTask(newTask) {
       try {
-         const taskRef = await addDoc(collection(db, "tasks"), { ...newTask });
+         const taskRef = await addDoc(collection(db, "tasks"), {
+            ...newTask
+         });
          const taskObj = await getDoc(doc(db, "tasks", taskRef.id))
          const newCard = createCardElement(taskObj.data(), taskRef.id, document.querySelectorAll('.card').length)
          document.querySelector('.row#card_container').insertAdjacentElement('afterbegin', newCard);
@@ -126,7 +154,7 @@ window.onload = (e) => {
    function createCardElement(task, refIid, index) {
 
       const htmlStateElement = document.createElement("span");
-      htmlStateElement.innerText = task.etat;//✅
+      htmlStateElement.innerText = task.etat; //✅
       if (task.etat == "Terminé") {
          htmlStateElement.setAttribute("class", "btn btn-small btn-secondary fs-x-small py-0 state");
       } else {
@@ -140,12 +168,16 @@ window.onload = (e) => {
       let htmlPriorityElement = document.createElement("button");
       // htmlPriorityElement.setAttribute("id", "");
       htmlPriorityElement.setAttribute("class", "border-0 btn-transition btn btn-outline-secondary priority");
-      const starNumber = { faible: 1, moyen: 2, elevee: 3 }
+      const starNumber = {
+         faible: 1,
+         moyen: 2,
+         elevee: 3
+      }
       for (let index = 1; index <= starNumber[task.priorite]; index++) {
          //✅
          htmlPriorityElement.innerHTML += htmlStarElement.outerHTML
       }
-      htmlPriorityElement.innerHTML += `<span class="text">${task.priorite}</span>`;//✅
+      htmlPriorityElement.innerHTML += `<span class="text">${task.priorite}</span>`; //✅
 
       const parentHTMLPriorityElement = document.createElement('div');
       parentHTMLPriorityElement.setAttribute('class', "d-inline");
@@ -160,12 +192,12 @@ window.onload = (e) => {
       let textDescriptionElement = document.createElement('p')
       textDescriptionElement.setAttribute('class', "card-text font-weight-normal description")
       // textDescriptionElement.setAttribute('id', "description")
-      textDescriptionElement.innerText = task.description;//✅
+      textDescriptionElement.innerText = task.description; //✅
 
       let cardTitleElement = document.createElement('h6')
       cardTitleElement.setAttribute('class', "card-title title")
       // cardTitleElement.setAttribute('id', "title")
-      cardTitleElement.innerHTML = task.titre;//✅
+      cardTitleElement.innerHTML = task.titre; //✅
 
       const cardBodyElement = document.createElement('div')
       cardBodyElement.setAttribute('class', "card-body title")
@@ -207,7 +239,7 @@ window.onload = (e) => {
       const deadLineElement = document.createElement("strong")
       deadLineElement.innerHTML = '<i class="fas fa-calendar-day"></i> <b>Date Limite:</b>';
       deadLineElement.setAttribute("class", "fs-x-small deadline");
-      deadLineElement.innerHTML = task.dateLimite;//✅
+      deadLineElement.innerHTML = task.dateLimite; //✅
 
       const cardFooterElement = document.createElement("div");
       cardFooterElement.setAttribute("class", "card-footer py-0 d-flex justify-content-between align-items-center");
@@ -216,12 +248,20 @@ window.onload = (e) => {
 
 
       const cardElement = document.createElement("div")
-      cardElement.setAttribute("class", "card px-0");
-      cardElement.setAttribute("class", "card px-0");
+      cardElement.setAttribute("class", "card px-0 shadow-sm");
       cardElement.dataset.id = refIid;
       cardElement.appendChild(cardHeaderElement);
       cardElement.appendChild(cardBodyElement);
       cardElement.appendChild(cardFooterElement);
+
+      /********************************/
+      /*Edit Task Details */
+      /********************************/
+      cardElement.querySelector('.card-body').addEventListener('click', () => {
+         handlingDetailsModalContentTask(cardElement)
+         document.querySelector('#details_modal_trigger').click()
+      })
+
 
       /********************************/
       /*Edit Task */
@@ -299,6 +339,7 @@ window.onload = (e) => {
          task.description = taskDescriptionInput.value
          task.priorite = taskPriorityInput.value
          task.dateLimite = new Date(taskDeadlineInput.value).toUTCString()
+         task.dateCreation = new Date().toUTCString()
          if (refId && refId != undefined) {
             updateTask(refId, task);
          } else {
@@ -325,11 +366,11 @@ window.onload = (e) => {
    showDetailsTextTrigger.forEach((event, i) => {
       event.addEventListener('click', function () {
          const currentCard = taskCards[i];
-
          handlingDetailsModalContentTask(currentCard)
          document.querySelector('#details_modal_trigger').click()
       })
    })
+
    function handlingDetailsModalContentTask(currentCard) {
       let taskTitle = currentCard.querySelector('.priority')
       document.querySelector('#details_task_title').innerText = taskTitle.textContent
@@ -394,4 +435,3 @@ window.onload = (e) => {
 
 
 }
-
