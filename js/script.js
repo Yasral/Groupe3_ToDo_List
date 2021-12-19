@@ -22,8 +22,8 @@ window.onload = (e) => {
    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    //The Config of the  group
    //  const firebaseConfig = {
-      
-      //    apiKey: "AIzaSyCPmKwQqsltQlZ22Ok03_Swt6nKEAyuuoU",
+
+   //    apiKey: "AIzaSyCPmKwQqsltQlZ22Ok03_Swt6nKEAyuuoU",
    //    authDomain: "storekeeper-85c99.firebaseapp.com",
    //    projectId: "storekeeper-85c99",
    //    storageBucket: "storekeeper-85c99.appspot.com",
@@ -48,12 +48,31 @@ window.onload = (e) => {
    const app = initializeApp(firebaseConfig);
    const db = getFirestore(app);
 
-   // Get the whole tasks from the database
+   /********************************/
+   /*Get th e whole task order by dateCreation in the databases */
+   /********************************/
    const getTasksList = async (db) => {
+      const tasksCollection = collection(db, 'tasks');
+      const q = await query(tasksCollection, orderBy("dateCreation", "desc"));
+      const querySnapshot = await getDocs(q);
+      let taskList = []
+      querySnapshot.forEach((doc) => {
+         taskList.push({
+            id: doc.id,
+            data: doc.data()
+         })
+      });
+      return taskList;
+   }
+
+   /********************************/
+   /*Get the whole task by default from the databases */
+   /********************************/
+   const getTasksListFunction = async (db) => {
       const tasksCollection = collection(db, 'tasks');
       const taskSnapshot = await getDocs(tasksCollection);
       let taskList = taskSnapshot.docs.map(doc => {
-         
+
          return {
             "data": doc.data(),
             "id": doc.id
@@ -66,7 +85,7 @@ window.onload = (e) => {
    }
    getTasksList(db).then(taskList => {
       displayAllElements(taskList);
-      let taskCards = document.querySelectorAll('.card')
+      // let taskCards = document.querySelectorAll('.card')
    });
 
    /********************************/
@@ -103,6 +122,7 @@ window.onload = (e) => {
          alert("Error Updating Task State ");
       }
    }
+
    /********************************/
    /*Remove a state task in databases */
    /********************************/
@@ -130,26 +150,6 @@ window.onload = (e) => {
          console.error("Error adding TAsk: ", e);
       }
    }
-
-
-   /********************************/
-   /*Create Some Card Element */
-   /********************************/
-   const task1 = {
-      titre: "Titre 1",
-      description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, corrupti.",
-      priorite: "moyen",
-      dateLimite: "Sun, 12 Dec 2021 09:20:57 GMT",
-      etat: "En cours"
-   };
-   const task2 = {
-      titre: "Titre 2",
-      description: "Amet consectetur adipisicing elit. Eligendi, corrupti.  amet consectetur adipisicing elit. Eligendi, corrupti.",
-      priorite: "elevee",
-      dateLimite: "Sun, 14 Dec 2021 09:20:57 GMT",
-      etat: "En cours"
-   };
-
 
    function createCardElement(task, refIid, index) {
 
@@ -324,7 +324,7 @@ window.onload = (e) => {
    /*Handling inputs */
    /********************************/
 
-   function submitForm(e, refId) {
+   const submitForm = (e, refId) => {
       const task = {}
       if (taskTitleInput.value == "" || taskDescriptionInput.value == "" || taskDeadlineInput.value == "") {
          taskTitleInput.style.borderColor = taskTitleInput.value != "" ? "initial" : "red";
@@ -350,11 +350,6 @@ window.onload = (e) => {
       }
    }
 
-   // addButton.addEventListener("click", (e) => {
-   //    submitForm(e, currentCard.dataset.id);
-   // })
-
-
    let taskCards = document.querySelectorAll('.card')
 
 
@@ -371,7 +366,7 @@ window.onload = (e) => {
       })
    })
 
-   function handlingDetailsModalContentTask(currentCard) {
+   const handlingDetailsModalContentTask = (currentCard) => {
       let taskTitle = currentCard.querySelector('.priority')
       document.querySelector('#details_task_title').innerText = taskTitle.textContent
       let taskDescrption = currentCard.querySelector('.description')
@@ -403,7 +398,9 @@ window.onload = (e) => {
    })
 
 
-
+   /********************************/
+   /*Update Modal when click on edit button */
+   /********************************/
    const updateModal = (currentCard) => {
       formModal.reset()
       taskTitleInput.style.borderColor = "initial";
