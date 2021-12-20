@@ -66,3 +66,29 @@ window.addEventListener("load", (e) => {
       }
       return inputValue;
    }
+
+   // Getting the form
+   let formValue = (e) => {
+      // e.preventDefault();
+      let formulaire = document.querySelector(".add-form");
+      let closeBtn = document.querySelector("#close_add_task_modal");
+      if (titleValue() == "" || descriptionValue() == "" || getDate() == "") {
+         e.preventDefault();
+         alert("Veuillez renseigner les champs vides");
+      } else {
+         addDoc(collRef, {
+            Titre: titleValue(),
+            DateLimite: getDate(),
+            Description: descriptionValue(),
+            Priorite: checkInput(),
+            Etat: "En cours"
+         })
+            .then(() => {
+               formulaire.reset();
+               closeBtn.click();
+               console.log("Alright");
+            })
+      }
+   }
+
+   addBtn.addEventListener("click", formValue);
