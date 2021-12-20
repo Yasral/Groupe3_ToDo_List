@@ -55,3 +55,14 @@ window.addEventListener("load", (e) => {
       let description = document.querySelector("#task_description").value;
       return description;
    }
+
+   // Fetching the priority value
+   let checkInput = () => {
+      let inputs = document.querySelectorAll(".form-check-input");
+      for (let i = 0; i < inputs.length; i++) {
+         if (inputs[i].checked) {
+            var inputValue = inputs[i].value;
+         }
+      }
+      return inputValue;
+   }
