@@ -34,3 +34,11 @@ window.addEventListener("load", (e) => {
    // Getting the add btn 
 
    let addBtn = document.querySelector("#btn_add");
+
+   // Getting the datas
+
+   // Beginning by the date
+   let getDate = () => {
+      let userDate = document.querySelector("#task_deadline").value;
+      return userDate;
+   }
