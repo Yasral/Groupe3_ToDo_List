@@ -92,3 +92,53 @@ window.addEventListener("load", (e) => {
    }
 
    addBtn.addEventListener("click", formValue);
+
+   // Rendering tasks
+
+   let taskContainer = document.querySelector("#task_container");
+
+   let generateTasks = (taskList) => {
+      let contentText = "";
+      let deadlineDate;
+      taskList.forEach((tasks) => {
+         deadlineDate = new Date(tasks.DateLimite);
+         contentText += `
+        <div class="card px-0" data-id="${tasks.id}" id="card-0" >
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="d-inline">
+                        <button class="border-0 btn-transition btn btn-outline-secondary" id="priority"><i class="fa fa-star"></i> ${tasks.Priorite}
+                        </button>
+                    </div>
+                    <span class="btn btn-small btn-primary fs-x-small py-0" id="state"> ${tasks.Etat}</button>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title" id="title">${tasks.Titre}</h6>
+                        <p class="card-text" id="description">${tasks.Description}</p>
+                </div>
+                <div class="card-footer py-0 d-flex justify-content-between align-items-center">
+                    <strong class="fs-x-small" id="deadline"><i class="fas fa-calendar-day"></i> <b>Date Limite:</b>${deadlineDate}</strong>
+
+                    <div class="d-inline">
+                        <a class="border-0 btn-transition btn btn-outline-success" id="finish_task"
+                            title="terminer tache">
+                            <i class="fa fa-check"></i>
+                        </a>
+                        <a href="#" class="border-0 btn-transition btn btn-outline-warning" id="edit_task"
+                            title="editer tache">
+                            <i class="fas fa-edit"> </i>
+                        </a>
+                        <a class="border-0 btn-transition btn btn-outline-danger" title="supprimer tache"
+                            id="remove_task"> <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    `;
+      })
+
+      taskContainer.innerHTML = contentText;
+
+      // Deleting a given task
+      let taskToDelete = document.querySelectorAll("#remove_task");
+      deleteTask(taskToDelete);
+   }
