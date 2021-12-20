@@ -142,3 +142,32 @@ window.addEventListener("load", (e) => {
       let taskToDelete = document.querySelectorAll("#remove_task");
       deleteTask(taskToDelete);
    }
+
+   // Handling the active class on the filter button
+
+   let btnsFilter = document.querySelectorAll(".btn-filter");
+
+   let filterToggle = (btn) => {
+      for (let i = 0; i < btn.length; i++) {
+         btn[i].addEventListener("click", (e) => {
+            var btnValue = btn[i].value;
+            console.log(btnValue);
+            let current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            e.target.className += " active";
+
+            // Ordering by titre
+            let ordering = query(collRef, orderBy("Titre"));
+            if (btnValue == "Titre") {
+               renderTasks(ordering);
+            }
+
+            // Filtering par priorite
+            let filtering = query(collRef, where("Priorite", "==", btnValue));
+            filterTasks(filtering);
+         });
+
+      }
+   }
+
+   filterToggle(btnsFilter);
