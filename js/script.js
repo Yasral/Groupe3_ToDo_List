@@ -171,3 +171,33 @@ window.addEventListener("load", (e) => {
    }
 
    filterToggle(btnsFilter);
+
+   // Ordering
+
+   const q = query(collRef, orderBy("Titre"));
+
+   let renderTasks = (queryContent) => {
+      onSnapshot(queryContent, (querySnapchot) => {
+         let taskList = [];
+         console.log(querySnapchot.docs);
+         querySnapchot.forEach((doc) => {
+            taskList.push({ ...doc.data(), id: doc.id });
+            generateTasks(taskList);
+         })
+      })
+   }
+
+   renderTasks(q);
+
+   // Filtering tasks
+
+   let filterTasks = (queryContent) => {
+      onSnapshot(queryContent, (querySnapchot) => {
+         let taskList = [];
+         console.log(querySnapchot.docs);
+         querySnapchot.forEach((doc) => {
+            taskList.push({ ...doc.data(), id: doc.id });
+            generateTasks(taskList);
+         })
+      })
+   }
