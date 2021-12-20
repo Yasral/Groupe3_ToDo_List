@@ -42,3 +42,16 @@ window.addEventListener("load", (e) => {
       let userDate = document.querySelector("#task_deadline").value;
       return userDate;
    }
+
+   // Getting the Title
+   let titleValue = () => {
+      let title = document.querySelector("#task_title").value;
+      return title;
+   }
+
+   // Getting the description value
+
+   let descriptionValue = () => {
+      let description = document.querySelector("#task_description").value;
+      return description;
+   }
