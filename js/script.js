@@ -201,3 +201,21 @@ window.addEventListener("load", (e) => {
          })
       })
    }
+
+   // Deleting tasks
+   let deleteTask = (taskToDelete) => {
+      for (let i = 0; i < taskToDelete.length; i++) {
+         taskToDelete[i].addEventListener("click", (e) => {
+            e.stopPropagation();
+            let id = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute("data-id");
+            console.log(id);
+            const docRef = doc(db, "Taches", id);
+            deleteDoc(docRef);
+         });
+      }
+   }
+
+   // Mark a task as ended
+   let endTask = document.querySelectorAll(".fa-check");
+
+})
