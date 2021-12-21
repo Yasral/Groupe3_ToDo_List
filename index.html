@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Todo List Web App</title>
+    <!-- Boostrap Bundle -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- <button class="btn btn-warning" id="add_btn">Add</button> -->
+        <div class=" p-2 d-flex justify-content-end my-5 align-items-center">
+            <!-- details Button trigger modal -->
+            <button type="button" id="details_modal_trigger" class="btn btn-sm btn-secondary d-none" data-toggle="modal"
+                data-target="#showDetailsModal">
+                Details
+            </button>
+            <!-- details Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-danger ml-4 d-none" id="add_modal_trigger" data-toggle="modal"
+                data-target="#addTaskModal">
+                <i class="fa fa-plus"></i> <span>Ajout de tache</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger ml-4" id="add_modal_button" data-toggle="modal"
+                data-target="#addTaskModal">
+                <i class="fa fa-plus"></i> <span>Ajout de tache</span>
+            </button>
+        </div>
+        
+        <div class="row d-grid  row-cols-1  sp-grid-gap" id="card_container">
+
+        </div>
+
+    </div>
+    <!-- Modals  -->
+
+
+    <!--  Task details Modal -->
+    <div class="modal fade" id="showDetailsModal" tabindex="-1" role="dialog" aria-labelledby="showDetailsModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center">
+                    <h5 class="modal-title" id="details_task_title">Tache 1 </h5>
+                    <button class="btn btn-sm ps-4 btn-primary py-0 fs-x-small mx-2" id="details_task_state">En
+                        cours</button></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Description</h6>
+                    <p id="details_task_description">Lorem ipsum dolor deleniti, veritatis illum, atque distinctio
+                        voluptatibus facere at a dolorum
+                        obcaecati doloremque quidem rem sint quisquam, et sequi consequatur minus voluptatem aut?</p>
+                    <h6 class="d-inline-block">Status :</h6>
+                    <p class="d-inline" id="details_task_priority">Elevee</p>
+                    <br />
+                    <h6 class="d-inline-block">Date limite :</h6>
+                    <p class="d-inline" id="details_task_deadline">12/12/2021</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Task Details Modal -->
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title">Ajouter Tache</h5>
+                    <button type="button" class="close" id="close_add_task_modal" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-modal">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <p class="d-none" id="error">Verifier que les valeurs saisies sont correctes</p>
+                            </div>
+                            <label for="task_title">Titre</label>
+                            <input type="text" class="form-control" id="task_title"
+                                placeholder="fonctionalite d'ajout de tache" />
+                        </div>
+                        <div class="form-group">
+                            <label for="task_deadline">Date limite</label>
+                            <input type="datetime-local" class="form-control" id="task_deadline"
+                                value="2021-01-12T19:30" />
+                        </div>
+                        <div class="form-group">
+                            <label for="task_description">Description</label>
+                            <textarea class="form-control" id="task_description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="low_priority">Priorite</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="low_priority" value="faible" checked />
+                                    <label class="form-check-label" for="low_priority">faible</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="average-priority" value="moyen" />
+                                    <label class="form-check-label" for="average-priority">Moyen</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input bg-danger" type="radio" name="task_priority"
+                                        id="high-priority" value="elevee" />
+                                    <label class="form-check-label" for="high-priority">Elevee</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger fs-small" id="submit">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Add Task Modal -->
+
+    <!-- End Modals -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="./js/script.js" defer></script>
+</body>
+
+</html>
